@@ -1,0 +1,77 @@
+import 'package:donations/const/style.dart';
+import 'package:donations/view/Homepage/homescreen/additem/controller/addimage_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+
+class CustomBottomSheet {
+  static Bottom_Sheet(context) {
+    // final controller = Get.put(AddImageController());
+    return TextButton.icon(
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                return Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            'Choose source',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 8.0),
+                          GetBuilder(
+                              init: AddImageController(),
+                              builder: (controller) {
+                                return Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      GestureDetector(
+                                          child: _con('Camera'),
+                                          onTap: () {
+                                            controller.pickimage(
+                                                imagesource:
+                                                    ImageSource.camera);
+                                          }),
+                                      GestureDetector(
+                                          child:
+                                              CustomBottomSheet._con('Gallery'),
+                                          onTap: () {
+                                            controller.pickimage(
+                                                imagesource:
+                                                    ImageSource.gallery);
+                                          })
+                                    ]);
+                              })
+                        ]));
+              });
+        },
+        icon: Icon(Icons.add),
+        label: Text('add photo', style: TextStyle(color: K.primaryColor)));
+  }
+
+  static _con(text) {
+    return Container(
+      width: 120,
+      height: 45,
+      decoration: BoxDecoration(
+          color: K.primaryColor, border: Border.all(color: K.mainColor)),
+      child: Center(
+        child: Text(text,
+            style: TextStyle(
+                color: K.whiteColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 25)),
+      ),
+    );
+  }
+}
