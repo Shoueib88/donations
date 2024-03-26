@@ -8,8 +8,6 @@ import 'package:get/get.dart';
 
 import '../../home/home.dart';
 
-void main() => runApp(const AddItem());
-
 class AddItem extends StatelessWidget {
   const AddItem({super.key});
 
@@ -36,18 +34,24 @@ class AddItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Obx(() => Container(
-                              width: 380,
-                              height: 240,
-                              child: imagecontroller.image1.value.isEmpty
-                                  ? Image.asset('asset/image/addimage.png',
-                                      fit: BoxFit.contain)
-                                  : Image.file(
-                                      File(imagecontroller.image1.value
-                                          .toString()),
-                                      fit: BoxFit.fill))),
+                          GetBuilder(
+                              init: AddImageController(),
+                              builder: (controller) {
+                                return Container(
+                                    width: 380,
+                                    height: 240,
+                                    child:
+                                        controller.fileimage.value.path.isEmpty
+                                            ? Image.asset(
+                                                'asset/image/addimage.png',
+                                                fit: BoxFit.contain)
+                                            : Image.file(
+                                                File(controller.fileimage.value
+                                                    .toString()),
+                                                fit: BoxFit.fill));
+                              }),
                           const SizedBox(height: 2),
-                          CustomBottomSheet.Bottom_Sheet(context)
+                          CustomBottomSheet().Bottom_Sheet(context)
                         ]),
                   )),
               const SizedBox(height: 20),
@@ -60,10 +64,16 @@ class AddItem extends StatelessWidget {
               const SizedBox(height: 20),
               feilds.bottons(
                 onpressed: () async {
-                  await itemcontroller.setdata();
+                  await itemcontroller.dataUpLoad(
+                      imagecontroller.fileimage.value,
+                      itemcontroller.pieces.text,
+                      itemcontroller.date.text,
+                      itemcontroller.time.text,
+                      itemcontroller.specialmarque.text,
+                      itemcontroller.apartmentnum.text);
                   Get.offAll(Home());
                 },
-              ),
+              )
             ],
           ),
         ));

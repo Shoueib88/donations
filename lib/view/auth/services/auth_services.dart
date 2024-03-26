@@ -21,6 +21,7 @@ class AuthServices {
         },
         verificationFailed: (error) {
           Get.snackbar('error', '$error', snackPosition: SnackPosition.TOP);
+          print('errror ======= $error');
         },
         codeSent: (verificationId, forceResendingToken) {
           this.verifictionid.value = verificationId;
@@ -29,28 +30,36 @@ class AuthServices {
           Get.to(OtpScreen());
         },
         codeAutoRetrievalTimeout: (verificationId) {
-          this.verifictionid.value = verificationId;
+          // this.verifictionid.value = verificationId;
         });
   }
 
   //verifyOtp
   sendOtp(String otp) async {
-    try {
-      var credential = await auth.signInWithCredential(
-          PhoneAuthProvider.credential(
-              verificationId: this.verifictionid.value, smsCode: otp));
-      if (credential.user != null) {
-        Get.snackbar('Success', 'Authentication Successed',
-            snackPosition: SnackPosition.TOP, backgroundColor: Colors.black26);
-        Get.offAll(const Home());
-      }
-    } catch (e) {
-      print('=================================');
-      print(e);
-      print('=================================');
-      Get.snackbar('error', '$e',
+    var credential = await auth.signInWithCredential(
+        PhoneAuthProvider.credential(
+            verificationId: this.verifictionid.value, smsCode: otp));
+    if (credential.user != null) {
+      Get.snackbar('Success', 'Authentication Successed',
           snackPosition: SnackPosition.TOP, backgroundColor: Colors.black26);
+      Get.offAll(const Home());
     }
+    // try {
+    //   var credential = await auth.signInWithCredential(
+    //       PhoneAuthProvider.credential(
+    //           verificationId: this.verifictionid.value, smsCode: otp));
+    //   if (credential.user != null) {
+    //     Get.snackbar('Success', 'Authentication Successed',
+    //         snackPosition: SnackPosition.TOP, backgroundColor: Colors.black26);
+    //     Get.offAll(const Home());
+    //   }
+    // } catch (e) {
+    //   print('=================================');
+    //   print(e);
+    //   print('-------------------------------------');
+    //   Get.snackbar('error', '$e',
+    //       snackPosition: SnackPosition.TOP, backgroundColor: Colors.black26);
+    // }
     // Get.offAll(const Home());
   }
 

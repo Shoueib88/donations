@@ -15,6 +15,8 @@ class MapController extends GetxController {
     for (var element in list) {
       addcontroller.address.value.text += element;
     }
+    update();
+    return addcontroller.address.value.text;
   }
 
   camerPosition() {

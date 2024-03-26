@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CustomBottomSheet {
-  static Bottom_Sheet(context) {
-    // final controller = Get.put(AddImageController());
+  Bottom_Sheet(context) {
+    final controller = Get.put(AddImageController());
     return TextButton.icon(
         onPressed: () {
           showModalBottomSheet(
@@ -28,30 +28,26 @@ class CustomBottomSheet {
                             ),
                           ),
                           SizedBox(height: 8.0),
-                          GetBuilder(
-                              init: AddImageController(),
-                              builder: (controller) {
-                                return Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      GestureDetector(
-                                          child: _con('Camera'),
-                                          onTap: () {
-                                            controller.pickimage(
-                                                imagesource:
-                                                    ImageSource.camera);
-                                          }),
-                                      GestureDetector(
-                                          child:
-                                              CustomBottomSheet._con('Gallery'),
-                                          onTap: () {
-                                            controller.pickimage(
-                                                imagesource:
-                                                    ImageSource.gallery);
-                                          })
-                                    ]);
-                              })
+                          Obx(() => Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    GestureDetector(
+                                        child: _con('Camera'),
+                                        onTap: () {
+                                          controller.pickimage(
+                                              imagesource: ImageSource.camera);
+                                          Navigator.of(context).pop();
+                                        }),
+                                    GestureDetector(
+                                        child:
+                                            CustomBottomSheet()._con('Gallery'),
+                                        onTap: () {
+                                          controller.pickimage(
+                                              imagesource: ImageSource.gallery);
+                                          Navigator.of(context).pop();
+                                        })
+                                  ]))
                         ]));
               });
         },
@@ -59,7 +55,7 @@ class CustomBottomSheet {
         label: Text('add photo', style: TextStyle(color: K.primaryColor)));
   }
 
-  static _con(text) {
+  _con(text) {
     return Container(
       width: 120,
       height: 45,

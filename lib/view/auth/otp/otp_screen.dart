@@ -36,6 +36,7 @@ class OtpScreen extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 2),
                       decoration: K.boxDecoration,
                       child: TextFormField(
+                          keyboardType: TextInputType.number,
                           controller: controller.listotp[index],
                           decoration:
                               const InputDecoration(border: InputBorder.none))))

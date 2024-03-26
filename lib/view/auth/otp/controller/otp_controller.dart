@@ -50,7 +50,7 @@ class OtpController extends GetxController {
 
   sendOtp() async {
     for (TextEditingController controller in listotp) {
-      otpstring.value += controller.text;
+      otpstring.value += controller.text.trim();
     }
     print('========= $otpstring');
     await authservices.sendOtp(otpstring.value);

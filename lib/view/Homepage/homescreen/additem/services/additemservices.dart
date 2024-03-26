@@ -4,14 +4,11 @@ import 'package:donations/model/item_model.dart';
 
 class AddItemServices {
   // final auth = FirebaseAuth.instance;
-  final _firestore = FirebaseFirestore.instance;
+  final firestore = FirebaseFirestore.instance;
 
   adddata({required ItemModel model}) async {
-    final products = _firestore
-        .collection('products')
-        .doc()
-        .collection('listUserInfo')
-        .doc();
+    final products =
+        firestore.collection('products').doc().collection('listUserInfo').doc();
     await products.set(model.toJson());
   }
 }
